@@ -49,32 +49,35 @@
                         <div class="card-body">{{lesson.content}}</div>
                     </div>
                 {% endfor %}
+                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#question-choiches">
+                    Start the Exam
+                </button>
             </div>
+
             <!-- Task: show questions and choices -->
-            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#question-choiches">
-                Start the Exam
-            </button>
-            
             {% if user.is_authenticated %}
 
             <div id="question-choiches" class="collapse">
-                <!-- Each example will have many questions -->
-                {% for question in course.question_set.all %}
-                <div class="card mt-1">
-                    <div class="card-header"><h5>{{ question.question_text}}</h5></div>
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {% for choice in question.choice_set.all %}
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="checkbox" name="choice_{{choice.id}}"
-                                        class="form-check-input" id="{{choice.id}}"
-                                        value="{{choice.id}}">{{ choice.content }}
-                                </label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
+                <form action="{% url 'onlinecourse:submit' course.id %}" method="post">
+                    <!-- Each example will have many questions -->
+                    {% for question in course.question_set.all %}
+                    <div class="card mt-1">
+                        <div class="card-header"><h5>{{ question.question_text}}</h5></div>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% for choice in question.choice_set.all %}
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" name="choice_{{choice.id}}"
+                                            class="form-check-input" id="{{choice.id}}"
+                                            value="{{choice.id}}">{{ choice.content }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>    
 
             {% else %}
