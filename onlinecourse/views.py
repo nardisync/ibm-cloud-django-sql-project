@@ -155,15 +155,14 @@ def show_exam_result(request, course_id, submission_id):
 
         # Calculate the total score
         if choiche.choiche_is_correct:
-
             question = get_object_or_404(Question, pk=choiche.question.id)
-
             total_score += question.question_grade
+
     print(f"Total score: {total_score}")
     context = {}
     context["course_id"] = course_id
     context["submission_id"] = submission_id
-    context["grade"] = total_score + 80
+    context["grade"] = total_score
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 
     
