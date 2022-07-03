@@ -39,13 +39,13 @@
     {% if grade > 80 %}
         <div class="alert alert-success">
             <!--Display passed info -->
-            <p>Congratulations, {{user.first_name}}! You have passed the exam and completed the 
+            <p><b>Congratulations, {{user.first_name}}!</b> You have passed the exam and completed the 
                 course with score {{grade}}/100.</p>
         </div>
     {% else %}
         <div class="alert alert-danger">
             <!--Display failed info -->
-            <p>Failed Sorry, {{user.first_name}}! You have failed the exam with score {{grade}}/100.</p>
+            <p><b>Failed</b> Sorry, {{user.first_name}}! You have failed the exam with score {{grade}}/100.</p>
         </div>
         <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
     {% endif %}
@@ -63,7 +63,7 @@
                     {% if choice.id not in selected_choices %}
                         {% if choice.choiche_is_correct %}                        
                             <div class="card-text"> 
-                                <p class="font-weight-bold"> Not selected: {{ choice.content }} </p>
+                                <p class="text-warning"> Not selected: {{ choice.content }} </p>
                             </div>
                         {%else%}
                             <div class="card-text"> 
@@ -74,11 +74,11 @@
                     {% else %}
                         {% if choice.choiche_is_correct %}                        
                             <div class="card-text"> 
-                                <p class="font-weight-bold"> Correct answer: {{ choice.content }} </p>
+                                <p class="font-weight-bold text-success"> Correct answer: {{ choice.content }} </p>
                             </div>
                         {%else%}
                         <div class="card-text"> 
-                            <p class="font-weight-bold"> Wrong answer: {{ choice.content }} </p>
+                            <p class="font-weight-bold text-danger"> Wrong answer: {{ choice.content }} </p>
                         </div>
                         {%endif%}
                     {%endif%}
