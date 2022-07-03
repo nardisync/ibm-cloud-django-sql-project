@@ -149,20 +149,21 @@ def show_exam_result(request, course_id, submission_id):
 
     # For each selected choice, check if it is a correct answer or not
     total_score = 0
+    selected_choices = []
     for obj_choiche in choiche_list:
 
         choiche = get_object_or_404(Choice, pk=obj_choiche.id)
-
+        selected_choices.append(obj_choiche.id)
         # Calculate the total score
         if choiche.choiche_is_correct:
             question = get_object_or_404(Question, pk=choiche.question.id)
             total_score += question.question_grade
 
-    print(f"Total score: {total_score}")
     context = {}
-    context["course_id"] = course_id
-    context["submission_id"] = submission_id
+    context["course"] = course
+    context["selected_choices"] = selected_choices
     context["grade"] = total_score
+    print(f"Context: {context}")
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 
     
